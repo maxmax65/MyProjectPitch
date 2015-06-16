@@ -1,0 +1,12 @@
+base
+devtools
+slidify
+shiny
+maps
+sp
+lattice
+survival
+Formula
+ggplot2
+Hmisc
+knitr

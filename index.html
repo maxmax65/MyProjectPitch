@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Roma province population by town</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Roma province population by town">
+  <meta name="author" content="Max Testa">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/github.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/font.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify_bis.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/pvroma.jpg">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>Roma province population by town</h1>
+    <h2>Developing Data Products</h2>
+    <p>Max Testa<br/>Data science learner</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Summary</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The project developed an interactive R web <a href="https://maxmax65.shinyapps.io/DataProductProject">application</a> implemented using a very powerful tool: <a href="http://shiny.rstudio.com/">Shiny</a> by dr. Ramnath Vaidyanathan.</p>
+
+<p>The application shows the trend of Roma province population from 2002 to 2011 giving the user the possibility to select one of the 121 towns/cities of the province and whether to present either the total numbers of Female and Male, or only the numbers related to one of the two sexes.</p>
+
+<p>The file with the population of Rome province is retrieved from the <a href="http://www.dati.gov.it/dataset">Italian Government open data repository</a>.</p>
+
+<p>The R object with the boundaries of Italian &quot;Comuni&quot; (level 3 map of Italy) is downloaded from the <a href="http://gadm.org/download">GADM database</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The data</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>## The dataset &#39;PopEtaAnno&#39; with population information has dimension:  1210  x  6
+</code></pre>
+
+<table>
+<caption>'PopEtaAnno' dataset short summary</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:left;">    Comune </th>
+   <th style="text-align:left;">     Total </th>
+   <th style="text-align:left;">      Male </th>
+   <th style="text-align:left;">     Female </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Length:1210 </td>
+   <td style="text-align:left;"> Min.   :    159 </td>
+   <td style="text-align:left;"> Min.   :     91 </td>
+   <td style="text-align:left;"> Min.   :     64.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Class :character </td>
+   <td style="text-align:left;"> 1st Qu.:   1198 </td>
+   <td style="text-align:left;"> 1st Qu.:    599 </td>
+   <td style="text-align:left;"> 1st Qu.:    603.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Mode  :character </td>
+   <td style="text-align:left;"> Median :   4810 </td>
+   <td style="text-align:left;"> Median :   2341 </td>
+   <td style="text-align:left;"> Median :   2461.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> Mean   :  32528 </td>
+   <td style="text-align:left;"> Mean   :  15507 </td>
+   <td style="text-align:left;"> Mean   :  17021.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 3rd Qu.:  13226 </td>
+   <td style="text-align:left;"> 3rd Qu.:   6582 </td>
+   <td style="text-align:left;"> 3rd Qu.:   6658.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> Max.   :2761477 </td>
+   <td style="text-align:left;"> Max.   :1301763 </td>
+   <td style="text-align:left;"> Max.   :1459714.0 </td>
+  </tr>
+</tbody>
+</table>
+
+<p>The Roma province map is obtained from the whole Italy Level3 map subsetting with NAME_3==&quot;Roma&quot;; some cleansing is then performed to align the content of &quot;NAME_3&quot; variable of the &quot;ProvRM&quot; map object to the one of corresponding &quot;Comune&quot; variable in population dataset; then the &quot;ProvRM&quot; object is saved as &quot;ProvRM_map.RDS&quot; using saveRDS() function</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="smallcode" id="id" style="background:;">
+  <hgroup>
+    <h2>The power of shiny (1/2)</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The shinyUI component uses fluidPage() instruction to make the sidebar and the mainbar elements adaptable to the browser window.</p>
+
+<p>Via sidebar instructions the user is asked to select the town (identified as &quot;input$town&quot;) and/or the type of information (identified as &quot;input$M_F_MF&quot;) to display: the default choices are on &quot;Roma&quot;, the Italian capital, and on &quot;Male+Female&quot;.
+The mainbar&#39;s only instruction calls the funzione plotOutput() that displays the barplot and the map produced by the shinyServer component.</p>
+
+<p>The shinyServer component loads the data and, based on the inputs collected by the UI, prepares the appropriate information, rendered and presented by the UI.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The power of shiny (2/2)</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This is a simplified excerpt of the ui.R code that selects the information used by the server.R to prepare the appropriate plot to present as output  through the ui.R.</p>
+
+<p>&lt;!--html_preserve--&gt;<div class="container-fluid"></p>
+
+<h2>Population of Roma province</h2>
+
+<div class="row">
+<div class="col-sm-4">
+<form class="well">
+Select the type of info and/or the town you are interested in
+<br/>
+<br/>
+<div id="M_F_MF" class="form-group shiny-input-radiogroup shiny-input-container">
+<label class="control-label" for="M_F_MF">Choose the info to show:</label>
+<div class="shiny-options-group">
+<div class="radio">
+<label>
+<input type="radio" name="M_F_MF" value="Female"/>
+<span>Female</span>
+</label>
+</div>
+
+<div class="radio">
+<label>
+<input type="radio" name="M_F_MF" value="Male"/>
+<span>Male</span>
+</label>
+</div>
+
+<div class="radio">
+<label>
+<input type="radio" name="M_F_MF" value="Male+Female" checked="checked"/>
+<span>Male+Female</span>
+</label>
+</div>
+
+<p></div>
+</div></p>
+
+<div class="form-group shiny-input-container">
+<label class="control-label" for="town">Choose a town to display</label>
+<div>
+<select id="town"><option value="Affile" selected>Affile</option>
+<option value="Agosta">Agosta</option>
+<option value="Albano Laziale">Albano Laziale</option>
+<option value="Allumiere">Allumiere</option>
+<option value="Anguillara Sabazia">Anguillara Sabazia</option>
+<option value="Anticoli Corrado">Anticoli Corrado</option>
+<option value="Anzio">Anzio</option>
+<option value="Arcinazzo Romano">Arcinazzo Romano</option>
+<option value="Ardea">Ardea</option>
+<option value="Ariccia">Ariccia</option>
+<option value="Arsoli">Arsoli</option>
+<option value="Artena">Artena</option>
+<option value="Bellegra">Bellegra</option>
+<option value="Bracciano">Bracciano</option>
+<option value="Camerata Nuova">Camerata Nuova</option>
+<option value="Campagnano di Roma">Campagnano di Roma</option>
+<option value="Canale Monterano">Canale Monterano</option>
+<option value="Canterano">Canterano</option>
+<option value="Capena">Capena</option>
+<option value="Capranica Prenestina">Capranica Prenestina</option>
+<option value="Carpineto Romano">Carpineto Romano</option>
+<option value="Casape">Casape</option>
+<option value="Castel Gandolfo">Castel Gandolfo</option>
+<option value="Castel Madama">Castel Madama</option>
+<option value="Castel San Pietro Romano">Castel San Pietro Romano</option>
+<option value="Castelnuovo di Porto">Castelnuovo di Porto</option>
+<option value="Cave">Cave</option>
+<option value="Cerreto Laziale">Cerreto Laziale</option>
+<option value="Cervara di Roma">Cervara di Roma</option>
+<option value="Cerveteri">Cerveteri</option>
+<option value="Ciampino">Ciampino</option>
+<option value="Ciciliano">Ciciliano</option>
+<option value="Cineto Romano">Cineto Romano</option>
+<option value="Civitavecchia">Civitavecchia</option>
+<option value="Civitella San Paolo">Civitella San Paolo</option>
+<option value="Colleferro">Colleferro</option>
+<option value="Colonna">Colonna</option>
+<option value="Fiano Romano">Fiano Romano</option>
+<option value="Filacciano">Filacciano</option>
+<option value="Fiumicino">Fiumicino</option>
+<option value="Fonte Nuova">Fonte Nuova</option>
+<option value="Formello">Formello</option>
+<option value="Frascati">Frascati</option>
+<option value="Gallicano nel Lazio">Gallicano nel Lazio</option>
+<option value="Gavignano">Gavignano</option>
+<option value="Genazzano">Genazzano</option>
+<option value="Genzano di Roma">Genzano di Roma</option>
+<option value="Gerano">Gerano</option>
+<option value="Gorga">Gorga</option>
+<option value="Grottaferrata">Grottaferrata</option>
+<option value="Guidonia Montecelio">Guidonia Montecelio</option>
+<option value="Jenne">Jenne</option>
+<option value="Labico">Labico</option>
+<option value="Ladispoli">Ladispoli</option>
+<option value="Lanuvio">Lanuvio</option>
+<option value="Lariano">Lariano</option>
+<option value="Licenza">Licenza</option>
+<option value="Magliano Romano">Magliano Romano</option>
+<option value="Mandela">Mandela</option>
+<option value="Manziana">Manziana</option>
+<option value="Marano Equo">Marano Equo</option>
+<option value="Marcellina">Marcellina</option>
+<option value="Marino">Marino</option>
+<option value="Mazzano Romano">Mazzano Romano</option>
+<option value="Mentana">Mentana</option>
+<option value="Monte Porzio Catone">Monte Porzio Catone</option>
+<option value="Montecompatri">Montecompatri</option>
+<option value="Monteflavio">Monteflavio</option>
+<option value="Montelanico">Montelanico</option>
+<option value="Montelibretti">Montelibretti</option>
+<option value="Monterotondo">Monterotondo</option>
+<option value="Montorio Romano">Montorio Romano</option>
+<option value="Moricone">Moricone</option>
+<option value="Morlupo">Morlupo</option>
+<option value="Nazzano">Nazzano</option>
+<option value="Nemi">Nemi</option>
+<option value="Nerola">Nerola</option>
+<option value="Nettuno">Nettuno</option>
+<option value="Olevano Romano">Olevano Romano</option>
+<option value="Palestrina">Palestrina</option>
+<option value="Palombara Sabina">Palombara Sabina</option>
+<option value="Percile">Percile</option>
+<option value="Pisoniano">Pisoniano</option>
+<option value="Poli">Poli</option>
+<option value="Pomezia">Pomezia</option>
+<option value="Ponzano Romano">Ponzano Romano</option>
+<option value="Riano">Riano</option>
+<option value="Rignano Flaminio">Rignano Flaminio</option>
+<option value="Riofreddo">Riofreddo</option>
+<option value="Rocca Canterano">Rocca Canterano</option>
+<option value="Rocca di Cave">Rocca di Cave</option>
+<option value="Rocca di Papa">Rocca di Papa</option>
+<option value="Rocca Priora">Rocca Priora</option>
+<option value="Rocca Santo Stefano">Rocca Santo Stefano</option>
+<option value="Roccagiovine">Roccagiovine</option>
+<option value="Roiate">Roiate</option>
+<option value="Roma">Roma</option>
+<option value="Roviano">Roviano</option>
+<option value="Sacrofano">Sacrofano</option>
+<option value="Sambuci">Sambuci</option>
+<option value="San Cesareo">San Cesareo</option>
+<option value="San Gregorio da Sassola">San Gregorio da Sassola</option>
+<option value="San Polo dei Cavalieri">San Polo dei Cavalieri</option>
+<option value="San Vito Romano">San Vito Romano</option>
+<option value="Sant'Angelo Romano">Sant'Angelo Romano</option>
+<option value="Sant'Oreste">Sant'Oreste</option>
+<option value="Santa Marinella">Santa Marinella</option>
+<option value="Saracinesco">Saracinesco</option>
+<option value="Segni">Segni</option>
+<option value="Subiaco">Subiaco</option>
+<option value="Tivoli">Tivoli</option>
+<option value="Tolfa">Tolfa</option>
+<option value="Torrita Tiberina">Torrita Tiberina</option>
+<option value="Trevignano Romano">Trevignano Romano</option>
+<option value="Vallepietra">Vallepietra</option>
+<option value="Vallinfreda">Vallinfreda</option>
+<option value="Valmontone">Valmontone</option>
+<option value="Velletri">Velletri</option>
+<option value="Vicovaro">Vicovaro</option>
+<option value="Vivaro Romano">Vivaro Romano</option>
+<option value="Zagarolo">Zagarolo</option></select>
+<script type="application/json" data-for="town" data-nonempty="">{}</script>
+</div>
+
+<p></div>
+</form>
+</div></p>
+
+<div class="col-sm-8"></div>
+
+<p></div>
+</div>&lt;!--/html_preserve--&gt;</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Summary'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='The data'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='The power of shiny (1/2)'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='The power of shiny (2/2)'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
