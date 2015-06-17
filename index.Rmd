@@ -11,13 +11,16 @@ mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
 runtime     : shiny
 logo        : pvroma.jpg
+output      : html_document
 ---
 
 ## Summary
 
-In my project I developed an interactive R web application implemented using a very powerful tool: [Shiny](http://shiny.rstudio.com/). The app is hosted on [shinyapps](https://maxmax65.shinyapps.io/DataProductProject) thanks to RStudio's kind support.
+In this project I developed an interactive R web [application](https://maxmax65.shinyapps.io/DataProductProject) implemented using a very powerful tool [(Shiny)](http://shiny.rstudio.com/) and hosted on [shinyapps](https://www.shinyapps.io/) thanks to RStudio's kind support.
 
-The application shows the trend of Roma province population from 2002 to 2011 giving the user the possibility to select one of the 121 towns/cities of the province and whether to present either the total numbers of Female and Male, or only the numbers related to one of the two sexes.
+The application shows the trend of Roma province population from 2002 to 2011 giving the user the possibility to select one of the 121 towns/cities of the province and whether to present either the total numbers of Females+Males, or only the numbers of Males or Females.
+
+The app fills on the map the territory of the selected town with a colour chosen from heat.colors() depending on the range in which the average total population of the town falls.
 
 The files with the code and the data for the project are on [this repo on github](https://github.com/maxmax65/DataProductProject.git)
 
@@ -57,7 +60,7 @@ The shinyServer component loads the demographic and geographic data and, based o
 This is a simplified version of what the shinyUI code of the app presents to let the user make his choices, on which the shinyServer component prepares the objects to show in the UI
 
 
-```{r, echo=FALSE, cache=FALSE}
+```{r, echo=FALSE, cache=FALSE, results='asis'}
 library(shiny)
 PopEtaAnno<-read.csv("../DataProductProject/PopolazionePerComuneEdAnno.csv", stringsAsFactors = FALSE)
 towns<-sort(unique(PopEtaAnno$Comune))
