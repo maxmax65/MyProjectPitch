@@ -51,13 +51,15 @@
     <h2>Summary</h2>
   </hgroup>
   <article data-timings="">
-    <p>The project developed an interactive R web <a href="https://maxmax65.shinyapps.io/DataProductProject">application</a> implemented using a very powerful tool: <a href="http://shiny.rstudio.com/">Shiny</a> by dr. Ramnath Vaidyanathan.</p>
+    <p>In my project I developed an interactive R web application implemented using a very powerful tool: <a href="http://shiny.rstudio.com/">Shiny</a>. The app is hosted on <a href="https://maxmax65.shinyapps.io/DataProductProject">shinyapps</a> thanks to RStudio&#39;s kind support.</p>
 
 <p>The application shows the trend of Roma province population from 2002 to 2011 giving the user the possibility to select one of the 121 towns/cities of the province and whether to present either the total numbers of Female and Male, or only the numbers related to one of the two sexes.</p>
 
+<p>The files with the code and the data for the project are on <a href="https://github.com/maxmax65/DataProductProject.git">this repo on github</a></p>
+
 <p>The file with the population of Rome province is retrieved from the <a href="http://www.dati.gov.it/dataset">Italian Government open data repository</a>.</p>
 
-<p>The R object with the boundaries of Italian &quot;Comuni&quot; (level 3 map of Italy) is downloaded from the <a href="http://gadm.org/download">GADM database</a></p>
+<p>The R object with the boundaries of Italian &quot;Comuni&quot; (level 3 map of Italy) is downloaded from the <a href="http://gadm.org/download">GADM database</a>.</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -128,13 +130,13 @@
 </tbody>
 </table>
 
-<p>The Roma province map is obtained from the whole Italy Level3 map subsetting with NAME_3==&quot;Roma&quot;; some cleansing is then performed to align the content of &quot;NAME_3&quot; variable of the &quot;ProvRM&quot; map object to the one of corresponding &quot;Comune&quot; variable in population dataset; then the &quot;ProvRM&quot; object is saved as &quot;ProvRM_map.RDS&quot; using saveRDS() function</p>
+<p>The Roma province map is selected as a subset (gadm$NAME_2==&quot;Roma&quot;) of the whole Italy Level3 map; some cleansing is then performed on it to align the names of the &quot;Comuni&quot; (&quot;NAME_3&quot; var) to those of the population dataset (&quot;Comune&quot; variable). Then the &quot;ProvRM&quot; object is saved as &quot;ProvRM_map.RDS&quot; using saveRDS() function in order to make it available to &quot;server.UI&quot;.</p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="smallcode" id="id" style="background:;">
+<slide class="class" id="id" style="background:;">
   <hgroup>
     <h2>The power of shiny (1/2)</h2>
   </hgroup>
@@ -144,7 +146,7 @@
 <p>Via sidebar instructions the user is asked to select the town (identified as &quot;input$town&quot;) and/or the type of information (identified as &quot;input$M_F_MF&quot;) to display: the default choices are on &quot;Roma&quot;, the Italian capital, and on &quot;Male+Female&quot;.
 The mainbar&#39;s only instruction calls the funzione plotOutput() that displays the barplot and the map produced by the shinyServer component.</p>
 
-<p>The shinyServer component loads the data and, based on the inputs collected by the UI, prepares the appropriate information, rendered and presented by the UI.</p>
+<p>The shinyServer component loads the demographic and geographic data and, based on the inputs collected by the UI, prepares the appropriate information, rendered and presented by the UI.</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -155,7 +157,7 @@ The mainbar&#39;s only instruction calls the funzione plotOutput() that displays
     <h2>The power of shiny (2/2)</h2>
   </hgroup>
   <article data-timings="">
-    <p>This is a simplified excerpt of the ui.R code that selects the information used by the server.R to prepare the appropriate plot to present as output  through the ui.R.</p>
+    <p>This is a simplified version of what the shinyUI code of the app presents to let the user make his choices, on which the shinyServer component prepares the objects to show in the UI</p>
 
 <p>&lt;!--html_preserve--&gt;<div class="container-fluid"></p>
 

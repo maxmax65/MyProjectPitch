@@ -365,4 +365,6 @@ pre code {
   color: #635E43 ;  /* ; #EF5150*/
 }
 
-
+slide.smallcode p {
+  font-size: 10px;
+}

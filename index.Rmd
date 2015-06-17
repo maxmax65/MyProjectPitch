@@ -15,13 +15,15 @@ logo        : pvroma.jpg
 
 ## Summary
 
-The project developed an interactive R web [application](https://maxmax65.shinyapps.io/DataProductProject) implemented using a very powerful tool: [Shiny](http://shiny.rstudio.com/) by dr. Ramnath Vaidyanathan.
+In my project I developed an interactive R web application implemented using a very powerful tool: [Shiny](http://shiny.rstudio.com/). The app is hosted on [shinyapps](https://maxmax65.shinyapps.io/DataProductProject) thanks to RStudio's kind support.
 
 The application shows the trend of Roma province population from 2002 to 2011 giving the user the possibility to select one of the 121 towns/cities of the province and whether to present either the total numbers of Female and Male, or only the numbers related to one of the two sexes.
 
+The files with the code and the data for the project are on [this repo on github](https://github.com/maxmax65/DataProductProject.git)
+
 The file with the population of Rome province is retrieved from the [Italian Government open data repository](http://www.dati.gov.it/dataset).
 
-The R object with the boundaries of Italian "Comuni" (level 3 map of Italy) is downloaded from the [GADM database](http://gadm.org/download)
+The R object with the boundaries of Italian "Comuni" (level 3 map of Italy) is downloaded from the [GADM database](http://gadm.org/download).
 
 --- .class #id 
 
@@ -34,10 +36,10 @@ kable(summary(PopEtaAnno[, c(2,4:6)]),format = "html",caption = "'PopEtaAnno' da
 ```
 
 
-The Roma province map is obtained from the whole Italy Level3 map subsetting with NAME_3=="Roma"; some cleansing is then performed to align the content of "NAME_3" variable of the "ProvRM" map object to the one of corresponding "Comune" variable in population dataset; then the "ProvRM" object is saved as "ProvRM_map.RDS" using saveRDS() function
+The Roma province map is selected as a subset (gadm$NAME_2=="Roma") of the whole Italy Level3 map; some cleansing is then performed on it to align the names of the "Comuni" ("NAME_3" var) to those of the population dataset ("Comune" variable). Then the "ProvRM" object is saved as "ProvRM_map.RDS" using saveRDS() function in order to make it available to "server.UI".
 
 
---- .smallcode #id 
+--- .class #id 
 
 ## The power of shiny (1/2)
 
@@ -46,13 +48,13 @@ The shinyUI component uses fluidPage() instruction to make the sidebar and the m
 Via sidebar instructions the user is asked to select the town (identified as "input$town") and/or the type of information (identified as "input$M_F_MF") to display: the default choices are on "Roma", the Italian capital, and on "Male+Female".
 The mainbar's only instruction calls the funzione plotOutput() that displays the barplot and the map produced by the shinyServer component.
 
-The shinyServer component loads the data and, based on the inputs collected by the UI, prepares the appropriate information, rendered and presented by the UI.
+The shinyServer component loads the demographic and geographic data and, based on the inputs collected by the UI, prepares the appropriate information, rendered and presented by the UI.
 
 --- .class #id 
 
 ## The power of shiny (2/2)
 
-This is a simplified excerpt of the ui.R code that selects the information used by the server.R to prepare the appropriate plot to present as output  through the ui.R.
+This is a simplified version of what the shinyUI code of the app presents to let the user make his choices, on which the shinyServer component prepares the objects to show in the UI
 
 
 ```{r, echo=FALSE, cache=FALSE}
